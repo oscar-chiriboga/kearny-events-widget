@@ -1,0 +1,491 @@
+/* Kearny Events Widget — Front-end styles */
+
+.kearny-events {
+    --kearny-columns: 4;
+    --kearny-image-ratio: 3 / 2;
+    --kearny-card-radius: 8px;
+    --kearny-text: #111;
+    --kearny-muted: #666;
+    --kearny-border: #e5e5e5;
+    --kearny-gap: 20px;
+    --kearny-accent: #3a88c9;
+    --kearny-accent-dark: #2d6fa8;
+    --kearny-accent-light: #eaf3fb;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.kearny-events *,
+.kearny-events *::before,
+.kearny-events *::after {
+    box-sizing: border-box;
+}
+
+/* ── Header (submit button row) ── */
+.kearny-events__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.kearny-events__header--left   { justify-content: flex-start; }
+.kearny-events__header--center { justify-content: center; }
+.kearny-events__header--right  { justify-content: flex-end; }
+
+.kearny-events__submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 12px 26px;
+    min-height: 46px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: transparent;
+    color: var(--kearny-accent);
+    border: 2px solid var(--kearny-accent);
+    box-shadow: 0 2px 8px rgba(58,136,201,0.10);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+    line-height: 1;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.kearny-events__submit-button:hover,
+.kearny-events__submit-button:focus-visible {
+    background: var(--kearny-accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(58,136,201,0.28);
+    outline: none;
+}
+
+.kearny-events__submit-button:focus {
+    outline: 3px solid var(--kearny-accent);
+    outline-offset: 3px;
+}
+
+.kearny-events__submit-button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Filled variant */
+.kearny-submit-style-filled .kearny-events__submit-button {
+    background: var(--kearny-accent);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(58,136,201,0.25);
+}
+.kearny-submit-style-filled .kearny-events__submit-button:hover,
+.kearny-submit-style-filled .kearny-events__submit-button:focus-visible {
+    background: var(--kearny-accent-dark);
+    box-shadow: 0 6px 20px rgba(58,136,201,0.35);
+}
+
+.kearny-events__submit-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+}
+
+/* ── Grid mode ── */
+.kearny-events__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--kearny-columns), minmax(0, 1fr));
+    gap: var(--kearny-gap);
+}
+
+/* ── Carousel mode ── */
+.kearny-events__carousel-wrapper {
+    position: relative;
+}
+
+.kearny-events__track {
+    display: flex;
+    gap: var(--kearny-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 6px 40px 12px 6px;
+    margin: -6px -40px -12px -6px;
+}
+
+.kearny-events__track::-webkit-scrollbar {
+    display: none;
+}
+
+.kearny-events__track:focus {
+    outline: 2px solid var(--kearny-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.kearny-events__carousel-wrapper .kearny-events__card {
+    flex: 0 0 calc((100% - (var(--kearny-columns) - 1) * var(--kearny-gap)) / var(--kearny-columns));
+    scroll-snap-align: start;
+}
+
+/* ── Arrow buttons ── */
+.kearny-events__arrow {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--kearny-accent);
+    border: 1.5px solid rgba(58,136,201,0.4);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    padding: 0;
+}
+
+.kearny-events__arrow:hover {
+    background: var(--kearny-accent);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(58,136,201,0.3);
+    border-color: var(--kearny-accent);
+}
+
+.kearny-events__arrow--prev { left: -20px; }
+.kearny-events__arrow--next { right: -20px; }
+
+.kearny-events__arrow[aria-disabled="true"],
+.kearny-events__arrow:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Hide arrows on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .kearny-events__arrow { display: none; }
+}
+
+/* ── Cards ── */
+.kearny-events__card {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    min-width: 0;
+}
+
+.kearny-events__image-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--kearny-image-ratio);
+    overflow: hidden;
+    background: var(--kearny-accent-light);
+    border-radius: var(--kearny-card-radius);
+    margin-bottom: 12px;
+}
+
+.kearny-events__image {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.kearny-events__image-link:hover .kearny-events__image {
+    transform: scale(1.03);
+}
+
+/* ── Placeholder card (no featured image) ── */
+.kearny-events__image--placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 16px;
+    text-align: left;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Dark gradient at bottom so text always reads */
+.kearny-events__image--placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 30%,
+        rgba(0,0,0,0.45) 100%
+    );
+    pointer-events: none;
+}
+
+/* Diagonal stripe texture */
+.kearny-events__image--placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 12px,
+        rgba(0,0,0,0.07) 12px,
+        rgba(0,0,0,0.07) 24px
+    );
+    pointer-events: none;
+}
+
+.kearny-events__placeholder-cat {
+    position: relative;
+    z-index: 1;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    line-height: 1;
+}
+
+.kearny-events__placeholder-title {
+    position: relative;
+    z-index: 1;
+    font-size: 1.1rem;
+    font-weight: 900;
+    line-height: 1.15;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+}
+
+/* ── Card body ── */
+.kearny-events__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 2px;
+}
+
+.kearny-events__title {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin: 0 0 2px;
+    font-weight: 700;
+}
+
+.kearny-events__title a {
+    color: var(--kearny-text);
+    text-decoration: none;
+}
+
+.kearny-events__title a:hover {
+    color: var(--kearny-accent);
+}
+
+.kearny-events__date {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--kearny-accent);
+    margin: 0;
+    font-weight: 600;
+}
+
+.kearny-events__venue {
+    font-size: 0.8rem;
+    color: var(--kearny-muted);
+    margin: 0;
+    font-style: italic;
+}
+
+.kearny-events__excerpt {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--kearny-muted);
+    margin: 4px 0 0;
+}
+
+/* ── Dot indicators ── */
+.kearny-events__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+}
+
+.kearny-events__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--kearny-border);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
+    flex-shrink: 0;
+}
+
+.kearny-events__dot.is-active {
+    background: var(--kearny-accent);
+    width: 20px;
+    border-radius: 999px;
+}
+
+/* ── View All Events button ── */
+.kearny-events__button-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.kearny-events__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--kearny-accent);
+    color: #fff;
+    padding: 14px 40px;
+    min-height: 48px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kearny-events__button:hover,
+.kearny-events__button:focus {
+    background: var(--kearny-accent-dark);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(58,136,201,0.3);
+}
+
+/* ── Empty state ── */
+.kearny-events--empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--kearny-muted);
+    border: 1px dashed var(--kearny-accent);
+    border-radius: var(--kearny-card-radius);
+    background: var(--kearny-accent-light);
+}
+
+/* ── Responsive: tablet ── */
+@media (max-width: 900px) {
+    .kearny-events {
+        --kearny-gap: 16px;
+    }
+    .kearny-events__grid {
+        grid-template-columns: repeat(min(var(--kearny-columns), 2), minmax(0, 1fr));
+    }
+    .kearny-events__arrow--prev { left: -16px; }
+    .kearny-events__arrow--next { right: -16px; }
+}
+
+/* ── Responsive: mobile ── */
+@media (max-width: 600px) {
+    .kearny-events {
+        --kearny-gap: 14px;
+    }
+
+    .kearny-events__header {
+        justify-content: center;
+        margin-bottom: 14px;
+    }
+
+    /* Compact submit button on mobile */
+    .kearny-events__submit-button {
+        width: auto;
+        padding: 9px 18px;
+        font-size: 11px;
+        min-height: 36px;
+        letter-spacing: 0.05em;
+    }
+
+    /* Grid: single column */
+    .kearny-events__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Carousel: always horizontal, ~1.2 cards peek */
+    .kearny-events--carousel .kearny-events__track {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 15%;
+    }
+
+    .kearny-events--carousel .kearny-events__carousel-wrapper .kearny-events__card {
+        flex: 0 0 78%;
+        min-width: 0;
+    }
+
+    .kearny-events__title {
+        font-size: 0.9rem;
+    }
+
+    .kearny-events__button-wrap {
+        margin-top: 16px;
+    }
+
+    /* Compact View All button on mobile */
+    .kearny-events__button {
+        width: auto;
+        padding: 9px 24px;
+        font-size: 11px;
+        min-height: 36px;
+        letter-spacing: 0.05em;
+        border-radius: 999px;
+    }
+}
+
+/* ── Extra small phones ── */
+@media (max-width: 380px) {
+    .kearny-events--carousel .kearny-events__carousel-wrapper .kearny-events__card {
+        flex: 0 0 88%;
+    }
+    .kearny-events__title {
+        font-size: 0.9rem;
+    }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .kearny-events__track { scroll-behavior: auto; }
+    .kearny-events__image,
+    .kearny-events__submit-button,
+    .kearny-events__button,
+    .kearny-events__arrow {
+        transition: none;
+    }
+    .kearny-events__submit-button:hover,
+    .kearny-events__submit-button:focus-visible,
+    .kearny-events__button:hover,
+    .kearny-events__image-link:hover .kearny-events__image {
+        transform: none;
+        box-shadow: none;
+    }
+}
