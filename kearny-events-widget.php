@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Kearny Events Widget
  * Description: Custom Elementor widget and shortcode for displaying The Events Calendar events with featured images.
- * Version:     1.2.1
- * Author:      Oscar C
+ * Version:     1.2.2
+ * Author:      Oscar Chiriboga
  * Text Domain: kearny-events
  * Requires at least: 6.0
  * Requires PHP: 7.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'KEARNY_EVENTS_VERSION', '1.2.1' );
+define( 'KEARNY_EVENTS_VERSION', '1.2.2' );
 
 /**
  * Plugin Update Checker — pulls updates from the GitHub repo automatically.
