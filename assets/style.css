@@ -391,6 +391,19 @@
     background: var(--kearny-accent-light);
 }
 
+/* ── Responsive: desktop (force 4 columns, shorter image ratio) ── */
+@media (min-width: 901px) {
+    .kearny-events__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+    .kearny-events__carousel-wrapper .kearny-events__card {
+        flex: 0 0 calc((100% - 3 * var(--kearny-gap)) / 4) !important;
+    }
+    .kearny-events__image-link {
+        aspect-ratio: 4 / 3 !important;
+    }
+}
+
 /* ── Responsive: tablet ── */
 @media (max-width: 900px) {
     .kearny-events {
